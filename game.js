@@ -15,6 +15,21 @@ let score = JSON.parse(localStorage.getItem('score')) || {
     };
   }
   */
+  let gamesPlayed = score.wins + score.losses + score.ties;
+  
+  let playerMoveHistory = [0, 0, 0];
+
+  const memoryFactor = 1;
+
+  function resetGame(){
+    score.wins = 0;
+    score.losses = 0;
+    score.ties = 0;
+    localStorage.removeItem('score');
+    updateScoreElement();
+    gamesPlayed = 0;
+    playerMoveHistory = [0, 0, 0];
+  }
 
   function playGame(playerMove) {
     const computerMove = pickComputerMove();
@@ -22,6 +37,7 @@ let score = JSON.parse(localStorage.getItem('score')) || {
     let result = '';
 
     if (playerMove === 'scissors') {
+      playerMoveHistory[2]++;
       if (computerMove === 'rock') {
         result = 'You lose.';
       } else if (computerMove === 'paper') {
@@ -31,6 +47,7 @@ let score = JSON.parse(localStorage.getItem('score')) || {
       }
 
     } else if (playerMove === 'paper') {
+      playerMoveHistory[1]++;
       if (computerMove === 'rock') {
         result = 'You win.';
       } else if (computerMove === 'paper') {
@@ -40,6 +57,7 @@ let score = JSON.parse(localStorage.getItem('score')) || {
       }
       
     } else if (playerMove === 'rock') {
+      playerMoveHistory[0]++;
       if (computerMove === 'rock') {
         result = 'Tie.';
       } else if (computerMove === 'paper') {
@@ -75,17 +93,32 @@ let score = JSON.parse(localStorage.getItem('score')) || {
   }
 
   function pickComputerMove() {
-    const randomNumber = Math.random();
+    let rockChance = Math.random();
+    let paperChance = Math.random();
+    let scissorChance = Math.random();
+
+
+    if(gamesPlayed > 5){
+        rockChance += (playerMoveHistory[2] / gamesPlayed) * memoryFactor;
+        paperChance += (playerMoveHistory[0] / gamesPlayed) * memoryFactor;
+        scissorChance += (playerMoveHistory[1] / gamesPlayed) * memoryFactor;
+    }
+
+    console.log(playerMoveHistory);
 
     let computerMove = '';
 
-    if (randomNumber >= 0 && randomNumber < 1 / 3) {
+    if (rockChance > paperChance && rockChance >= scissorChance) {
       computerMove = 'rock';
-    } else if (randomNumber >= 1 / 3 && randomNumber < 2 / 3) {
+    } else if (paperChance >= rockChance && paperChance > scissorChance) {
       computerMove = 'paper';
-    } else if (randomNumber >= 2 / 3 && randomNumber < 1) {
+    } else if (scissorChance >= paperChance && scissorChance > rockChance) {
       computerMove = 'scissors';
     }
+
+    console.log(playerMoveHistory);
+
+    gamesPlayed++;
 
     return computerMove;
   }
