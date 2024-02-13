@@ -67,6 +67,20 @@ let score = JSON.parse(localStorage.getItem('score')) || {
     playGame('scissors');
   });
 
+  document.body.addEventListener('keydown', (event) => {
+    switch(event.key){
+      case 'r':
+        playGame('rock');
+        break;
+      case 'p':
+        playGame('paper');
+        break;
+      case 's':
+        playGame('scissors');
+        break;
+    }
+  });
+
   function playGame(playerMove) {
     const computerMove = pickComputerMove();
 
