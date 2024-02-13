@@ -21,6 +21,10 @@ let score = JSON.parse(localStorage.getItem('score')) || {
 
   const memoryFactor = 1;
 
+  document.querySelector('.js-reset-button').addEventListener('click', () => {
+    resetGame();
+  });
+
   function resetGame(){
     score.wins = 0;
     score.losses = 0;
@@ -31,12 +35,16 @@ let score = JSON.parse(localStorage.getItem('score')) || {
     playerMoveHistory = [0, 0, 0];
   }
 
+  document.querySelector('.js-auto-play-button').addEventListener('click', () => {
+    autoPlay();
+  });
+
   let isAutoPlaying = false;
   let intervalId;
 
   function autoPlay() {
     if (!isAutoPlaying){
-      intervalId = setInterval(function() {
+      intervalId = setInterval(() => {
         const playerMove = pickComputerMove();
         playGame(playerMove);
       }, 1000);
@@ -46,6 +54,18 @@ let score = JSON.parse(localStorage.getItem('score')) || {
       isAutoPlaying = false;
     }
   }
+
+  document.querySelector('.js-rock-button').addEventListener('click', () => {
+    playGame('rock');
+  });
+
+  document.querySelector('.js-paper-button').addEventListener('click', () => {
+    playGame('paper');
+  });
+
+  document.querySelector('.js-scissors-button').addEventListener('click', () => {
+    playGame('scissors');
+  });
 
   function playGame(playerMove) {
     const computerMove = pickComputerMove();
