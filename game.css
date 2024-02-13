@@ -41,3 +41,20 @@ body {
     padding: 8px 15px;
     cursor: pointer;
 }
+
+.reset-score-button {
+    display: block;
+    margin-top: 18px;
+    border-radius: 20px;
+    margin-left: 20px;
+}
+
+.speed-up-button, 
+.speed-down-button {
+    font-size: 20px;
+    padding-bottom: 5px;
+    padding-top: 2px;
+    border-radius: 0px;
+    border-color: transparent;
+    cursor: pointer;
+}

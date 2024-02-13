@@ -6,19 +6,25 @@
   </head>
   <body>
     <p class="title">Rock Paper Scissors</p>
-    <button class="move-button js-rock-button"><img src="game-icons/rock-emoji.png" class="move-icon"></button>
+    <div>
+      <button class="move-button js-rock-button"><img src="game-icons/rock-emoji.png" class="move-icon"></button>
 
-    <button class="move-button js-paper-button"><img src="game-icons/paper-emoji.png" class="move-icon"></button>
+      <button class="move-button js-paper-button"><img src="game-icons/paper-emoji.png" class="move-icon"></button>
 
-    <button class="move-button js-scissors-button"><img src="game-icons/scissors-emoji.png" class="move-icon"></button>
+      <button class="move-button js-scissors-button"><img src="game-icons/scissors-emoji.png" class="move-icon"></button>
+    </div>
 
     <p class="js-result result"></p>
     <p class="js-moves"></p>
     <p class="js-score score"></p>
 
-    <button class="reset-score-button js-reset-button">Reset Score</button>
+    <div>
+      <button class="auto-play-button js-auto-play-button">Auto Play</button>
+      <button class="speed-up-button js-speed-up-button">&uarr;</button>
+      <button class="speed-down-button js-speed-down-button">&darr;</button>
+    </div>
 
-    <button class="auto-play-button js-auto-play-button">Auto Play</button>
+    <button class="reset-score-button js-reset-button">Reset Score</button>
 
     <script src="game.js"></script>
   </body>

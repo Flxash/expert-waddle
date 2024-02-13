@@ -40,18 +40,46 @@ let score = JSON.parse(localStorage.getItem('score')) || {
   });
 
   let isAutoPlaying = false;
-  let intervalId;
+  //let intervalId;
+  let intervalIdStorage = [];
 
   function autoPlay() {
     if (!isAutoPlaying){
-      intervalId = setInterval(() => {
+      intervalIdStorage.push(setInterval(() => {
         const playerMove = pickComputerMove();
         playGame(playerMove);
-      }, 1000);
+      }, 1000));
       isAutoPlaying = true;
     } else {
-      clearInterval(intervalId);
+      intervalIdStorage.forEach((intervalId) => {
+        clearInterval(intervalId);
+      })
       isAutoPlaying = false;
+    }
+  }
+
+  document.querySelector('.js-speed-up-button').addEventListener('click', () => {
+    autoPlayInstances('increase');
+  });
+
+  document.querySelector('.js-speed-down-button').addEventListener('click', () => {
+    autoPlayInstances('decrease');
+  });
+
+  function autoPlayInstances(effect) {
+    if (isAutoPlaying){
+      if (effect === 'increase'){
+        intervalIdStorage.push(setInterval(() => {
+          const playerMove = pickComputerMove();
+          playGame(playerMove);
+        }, 1000));
+      } else if (effect === 'decrease') {
+        const intervalId = intervalIdStorage.pop();
+        clearInterval(intervalId);
+        if (!intervalIdStorage.size){
+          isAutoPlaying = false;
+        }
+      }
     }
   }
 
@@ -77,6 +105,9 @@ let score = JSON.parse(localStorage.getItem('score')) || {
         break;
       case 's':
         playGame('scissors');
+        break;
+      case 'a':
+        autoPlay();
         break;
     }
   });
